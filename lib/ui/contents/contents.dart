@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:minimum_hope/ui/tasks/tasks.dart';
+import 'package:minimum_hope/ui/timetable/timetable.dart';
 
-class Root extends HookConsumerWidget {
-  Root({Key? key}) : super(key: key);
+class Contents extends HookConsumerWidget {
+  Contents({Key? key}) : super(key: key);
 
   static const List<String> titleTexts = [
     'Timetable',
@@ -29,18 +31,16 @@ class Root extends HookConsumerWidget {
       label: titleTexts[3],
     ),
   ];
-
-  final indexState = useState(0);
+  final screens = [TimeTable(), Tasks(), Tasks(), Tasks()];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final indexState = useState(0);
     return Scaffold(
       appBar: AppBar(
         title: Text(titleTexts[indexState.value]),
       ),
-      body: const Center(
-        child: Text('Root'),
-      ),
+      body: screens[indexState.value],
       bottomNavigationBar: BottomNavigationBar(
         items: bottomBarItems,
         currentIndex: indexState.value,
